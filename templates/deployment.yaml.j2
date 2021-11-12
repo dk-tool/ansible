@@ -15,6 +15,7 @@ spec:
       labels:
          app: {{ gpu_name }}
     spec:
+      serviceAccount: fpg-runner
       containers:
         - name: jupyter
           image: {{ gpu_image }}:{{ gpu_image_tag }}
