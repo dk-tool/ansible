@@ -7,14 +7,26 @@
     - 'vars/main.yaml'
 
   tasks:
-    - block:
-      - set_fact: 
-          gpu_namespace: "{{ 'fpg-' + gpu_name }}"
-      when: gpu_namespace is undefined
+    - name: set facts
+      set_fact:
+        gpu_namespace: "{{ form_namespace | default('fpg-' + form_name, true) }}"
+        gpu_name: "{{ form_name }}"
+        gpu_image: "{{ form_image }}"
+        gpu_image_tag: "{{ form_image_tag }}"
+        gpu_count: "{{ form_gpu_count }}"
+        gpu_url: "{{ form_url | default(form_name + '.' + base_url, true) }}"
+
+    - name: debug
+      debug:
+        var: gpu_name
 
     - name: debug
       debug:
         var: gpu_namespace
+        
+    - name: debug
+      debug:
+        var: gpu_url
 
     - name: Create a k8s namespace
       kubernetes.core.k8s:

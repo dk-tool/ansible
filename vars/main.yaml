@@ -1,7 +1,8 @@
-gpu_name: user001
-#gpu_namespace: fpg-team01
-gpu_image: denkay123/dk
-gpu_image_tag: tensorflow-19.10-py3
-gpu_count: 1
-gpu_url: user001.apps.ocp4.nh.com
+form_name: user001
+form_namespace: ''
+form_image: denkay123/dk
+form_image_tag: tensorflow-19.10-py3
+form_gpu_count: 1
+#form_url: ''
+base_url: 'apps.ocp4.nh.com'
 
