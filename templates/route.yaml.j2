@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ gpu_name }}
+  namespace: {{ gpu_namespace }}
+spec:
+  host: {{ gpu_url }}
+  to:
+    kind: Service
+    name: {{ gpu_name }}
+  port:
+    targetPort: jupyter

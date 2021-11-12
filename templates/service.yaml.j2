@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ gpu_name }}
+  namespace: {{ gpu_namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ gpu_name }}
+  ports:
+    - name: jupyter
+      protocol: TCP
+      port: 80
+      targetPort: 8888
+    - name: ssh
+      protocol: TCP
+      port: 88
+      targetPort: 22
+

@@ -1,11 +1,33 @@
 ---
 - hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars_files:
+    - 'vars/main.yaml'
 
   tasks:
+    - block:
+      - set_fact: 
+          gpu_namespace: "{{ 'fpg-' + gpu_name }}"
+      when: gpu_namespace is undefined
+
+    - name: debug
+      debug:
+        var: gpu_namespace
+
     - name: Create a k8s namespace
       kubernetes.core.k8s:
-        name: testing
+        name: "{{ gpu_namespace }}"
         api_version: v1
         kind: Namespace
         state: present
+
+    - name: Create deployment from jinja2 template
+      kubernetes.core.k8s:
+        state: present
+        template:
+          - path: 'templates/deployment.yaml.j2'
+          - path: 'templates/service.yaml.j2'
+          - path: 'templates/route.yaml.j2'
 
