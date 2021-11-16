@@ -20,13 +20,12 @@ spec:
         - name: jupyter
           image: {{ gpu_image }}:{{ gpu_image_tag }}
           ports:
-            - name: jupyter
-              containerPort: 8888
+            - name: {{ service_name_1 }}
+              containerPort: {{ service_port_1 }}
               protocol: TCP
-            - name: ssh
-              containerPort: 22
+            - name: {{ service_name_2 }}
+              containerPort: {{ service_port_2 }}
               protocol: TCP
-            - containerPort: 80
           env:
             - name: JUPYTER_DATA_DIR
               value: "/tmp/.local"
@@ -34,5 +33,11 @@ spec:
           args:
             - jupyter notebook  --notebook-dir=/tmp --NotebookApp.token='' --NotebookApp.password='' ;
           resources:
+            requests:
+              cpu: {{ cpu_count }}
+              memory: {{ mem_count }}Mi
+              nvidia.com/gpu: {{ gpu_count }}
             limits:
+              cpu: {{ cpu_count }}
+              memory: {{ mem_count }}Mi
               nvidia.com/gpu: {{ gpu_count }}
