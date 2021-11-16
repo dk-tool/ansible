@@ -34,15 +34,7 @@
       debug:
         var: gpu_url
 
-    - name: Create Permission for {{ gpu_namespace }}
-      kubernetes.core.k8s:
-        state: absent
-        template:
-          - path: 'templates/serviceAccount.yaml.j2'
-          - path: 'templates/scc.rbac.yaml.j2'
-          - path: 'templates/roleBinding.yaml.j2'
-
-    - name: Create deployment from jinja2 template
+    - name: Create deployment form {{ gpu_name }} template
       kubernetes.core.k8s:
         state: absent
         template:
