@@ -23,9 +23,6 @@ spec:
             - name: {{ service_name_1 }}
               containerPort: {{ service_port_1 }}
               protocol: TCP
-            - name: {{ service_name_2 }}
-              containerPort: {{ service_port_2 }}
-              protocol: TCP
           env:
             - name: JUPYTER_DATA_DIR
               value: "/tmp/.local"
