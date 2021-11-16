@@ -29,12 +29,8 @@
     - name: debug
       debug:
         var: gpu_namespace
-        
-    - name: debug
-      debug:
-        var: gpu_url
 
-    - name: Create deployment form {{ gpu_name }} template
+    - name: Delete deployment form {{ gpu_name }} template
       kubernetes.core.k8s:
         state: absent
         template:
