@@ -33,8 +33,8 @@ spec:
             requests:
               cpu: {{ cpu_count }}
               memory: {{ mem_count }}Mi
-              nvidia.com/gpu: {{ gpu_count }}
+              {{ gpu_count }}
             limits:
               cpu: {{ cpu_count }}
               memory: {{ mem_count }}Mi
-              nvidia.com/gpu: {{ gpu_count }}
+              {{ gpu_count }}
