@@ -3,7 +3,7 @@ form_name: ngc
 form_namespace: ''
 form_image: example-registry-quay-quay-test.apps.ocp4.nh.com/sti/fpg
 form_image_tag: tf19.10-py3
-form_gpu_count: 1
+form_gpu_count: ''
 form_cpu_count: 0.5
 form_mem_count: 512
 form_service_name_1: jupyter
