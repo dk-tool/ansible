@@ -29,6 +29,13 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - jupyter notebook  --notebook-dir=/tmp --NotebookApp.token='' --NotebookApp.password='' ;
+              {{ arg_1 }}
+              {{ arg_2 }}
+              {{ arg_3 }}
+              {{ arg_4 }}
+              {{ arg_5 }}
+              {{ arg_6 }}
+              
           resources:
             requests:
               cpu: {{ cpu_count }}
