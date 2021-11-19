@@ -1,4 +1,5 @@
 base_url: 'apps.ocp4.nh.com'
+form_url: ''
 form_name: ngc
 form_namespace: ''
 form_image: example-registry-quay-quay-test.apps.ocp4.nh.com/sti/fpg
