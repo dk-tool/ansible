@@ -28,9 +28,7 @@ spec:
               value: "/tmp/.local"
           command: ["/bin/bash", "-c"]
           args:
-            - jupyter notebook  --notebook-dir=/tmp --NotebookApp.token='' --NotebookApp.password='' &;
-              {{ arg_1 }}
-              {{ arg_2 }}
+            - jupyter notebook  --notebook-dir=/tmp --NotebookApp.token='' --NotebookApp.password='' &
               
           resources:
             requests:
