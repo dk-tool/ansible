@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ gpu_name }}
+  labels:
+    app: {{ gpu_name }}
+    app.kubernetes.io/instance: {{ gpu_name }}
+  namespace: {{ gpu_namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ gpu_name }}
+  replicas: 2
+  template:
+    metadata:
+      labels:
+         app: {{ gpu_name }}
+    spec:
+      serviceAccount: gitlab-runner-sa
+      imagePullSecrets:
+        - name: dkhsu-pull-secret
+      containers:
+        - name: {{ gpu_name }}
+          image: {{ gpu_image }}:{{ gpu_image_tag }}
+          ports:
+            - name: {{ service_name_1 }}
+              containerPort: {{ service_port_1 }}
+              protocol: TCP
+              
+          resources:
+            requests:
+              cpu: {{ cpu_count }}
+              memory: {{ mem_count }}Mi
+              {{ gpu_count }}
+            limits:
+              cpu: {{ cpu_count }}
+              memory: {{ mem_count }}Mi
+              {{ gpu_count }}

@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ gpu_name }}
+  name: {{ gpu_name }}
+  namespace: {{ gpu_namespace }}
+spec:
+  host: {{ gpu_url }}
+  to:
+    kind: Service
+    name: {{ gpu_name }}
+  port:
+    targetPort: {{ service_port_1 }}

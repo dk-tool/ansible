@@ -1,0 +1,64 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+
+  vars_files:
+    - 'vars/main.yaml'
+
+  tasks:
+    - name: set facts
+      set_fact:
+        gpu_namespace: "{{ form_namespace | default('sti-' + form_name, true) }}"
+        gpu_name: "{{ form_name }}"
+        gpu_image: "{{ form_image }}"
+        gpu_image_tag: "{{ form_image_tag }}"
+        cpu_count: "{{ form_cpu_count }}"
+        gpu_count: "{{ form_gpu_count }}"
+        mem_count: "{{ form_mem_count }}"
+        service_name_1: "{{ form_service_name_1 }}"
+        service_name_2: "{{ form_service_name_2 }}"
+        service_port_1: "{{ form_service_port_1 | default(none, true) }}"
+        service_port_2: "{{ form_service_port_2 | default(none, true) }}"
+        gpu_url: "{{ form_url | default(form_name + '.' + base_url, true) }}"
+        arg_1: "{{ form_arg_1 | default('') }}"
+        arg_2: "{{ form_arg_2 | default('') }}"
+
+    - name: debug
+      debug:
+        var: gpu_name
+
+    - name: debug
+      debug:
+        var: gpu_namespace
+        
+    - name: debug
+      debug:
+        var: gpu_url
+
+    - name: Create a k8s namespace
+      kubernetes.core.k8s:
+        name: "{{ gpu_namespace }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Create Permission for {{ gpu_namespace }}
+      kubernetes.core.k8s:
+        state: present
+        template:
+          - path: 'templates/serviceAccount.yaml.j2'
+          - path: 'templates/scc.rbac.yaml.j2'
+          - path: 'templates/roleBinding.yaml.j2'
+
+    - name: Create deployment from jinja2 template
+      kubernetes.core.k8s:
+        state: present
+        template:
+          - path: 'templates/deployment.yaml.j2'
+          - path: 'templates/service.yaml.j2'
+          - path: 'templates/route.yaml.j2'
+
+
+
+        

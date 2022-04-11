@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ gpu_name }}
+  name: {{ gpu_name }}
+  namespace: {{ gpu_namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ gpu_name }}
+  ports:
+    - name: {{ service_name_1 }}
+      protocol: TCP
+      port: 80
+      targetPort: {{ service_port_1 }}

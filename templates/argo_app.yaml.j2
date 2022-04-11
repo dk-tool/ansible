@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ gpu_name }}
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: {{ gpu_namespace }}
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: .
+    repoURL: 'http://gitlab.apps.ocp.mic.com.tw/stiadmin/{{ gpu_name }}.git'
+    targetRevision: HEAD
+  project: default
